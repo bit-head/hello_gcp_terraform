@@ -1,8 +1,13 @@
-# Use the slim debian/python base image
+# "slim" debian/python base image
 FROM python:slim
 
-# Update package repositories and install required packages
-RUN apt update && apt install -y pkg-config libicu-dev build-essential cmake
+# ensure required modules
+RUN pip install flask google-cloud-firestore
+
+# Install curl and gpg - we'll need them later
+RUN apt update
+RUN apt upgrade
+RUN apt -y install curl gpg
 
 # Set the working directory
 WORKDIR /app
@@ -10,10 +15,9 @@ WORKDIR /app
 # Copy files to the working directory
 COPY app/ /app
 
-# Ensure build env for CXX (required for wheel)
-ENV CXX=g++
-# Install app requirements
-RUN pip install -r ./requirements.txt
+# Setup Google auth env
+ENV GOOGLE_APPLICATION_CREDENTIALS="/app/idm-challenge-424101-08d15a1468a7.json"
+
 # Start the application
-CMD ["/bin/bash", "/app/gunicorn.sh"]
+CMD ["/usr/bin/env", "python3", "/app/flask_firestore.py"]
 
