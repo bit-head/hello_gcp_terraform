@@ -1,20 +1,26 @@
 provider "google" {
-  credentials = file("idm-challenge-424101-08d15a1468a7.json")
+  credentials = file("local_exec/idm-challenge-424101-08d15a1468a7.json")
   project     = "idm-challenge-424101"
   region      = "us-west1-a"
 }
 
-resource "null_resource" "firestore_data" {
-
-  provisioner "local-exec" {
-    command = "/usr/bin/env python3 app/insert_message_data.py"
-  }
-
-  depends_on = [google_project_service.firestore]
-}
-
 resource "google_project_service" "firestore" {
   service = "firestore.googleapis.com"
+}
+
+resource "google_firestore_database" "default" {
+  name        = "(default)"
+  project     = google_project_service.firestore.project
+  location_id = "us-west1"
+  type        = "FIRESTORE_NATIVE"
+  depends_on  = [google_project_service.firestore]
+}
+
+resource "null_resource" "firestore_data" {
+  provisioner "local-exec" {
+    command = "/usr/bin/env python3 local_exec/insert_message_data.py"
+  }
+  depends_on = [google_firestore_database.default]
 }
 
 resource "google_container_cluster" "hello_world" {
@@ -63,7 +69,7 @@ resource "kubernetes_deployment" "hello-cluster" {
 
       spec {
         container {
-          image = "us-west1-docker.pkg.dev/idm-challenge-424101/copelandorama/idm_hello_world:latest"
+          image = "us-west1-docker.pkg.dev/idm-challenge-424101/copelandorama/demo_firestore:latest"
           name  = "hello-world"
           }
       }
@@ -89,3 +95,15 @@ resource "kubernetes_service" "hello-cluster" {
     type = "LoadBalancer"
   }
 }
+
+resource "google_project_service" "monitoring" {
+  service = "monitoring.googleapis.com"
+  disable_dependent_services=true  
+}
+
+output "public_ip" {
+  value = kubernetes_service.hello-cluster.status.0.load_balancer.0.ingress.0.ip
+}
+
+
+ 

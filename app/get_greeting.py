@@ -3,10 +3,10 @@
 from flask import Flask, jsonify
 from google.cloud import firestore
 
-app = Flask(__name__)
+msg = Flask(__name__)
 db = firestore.Client()
 
-@app.route('/message', methods=['GET'])
+@msg.route('/', methods=['GET'])
 def get_data():
     collection = db.collection('message')
 
@@ -17,4 +17,4 @@ def get_data():
     return jsonify(message)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+     msg.run(debug=True)
