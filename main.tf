@@ -1,7 +1,7 @@
 provider "google" {
-  credentials = file("local_exec/idm-challenge-424101-08d15a1468a7.json")
+  credentials = file(var.google_creds)
   project     = "idm-challenge-424101"
-  region      = "us-west1-a"
+  region      = var.location
 }
 
 resource "google_project_service" "firestore" {
@@ -11,7 +11,7 @@ resource "google_project_service" "firestore" {
 resource "google_firestore_database" "default" {
   name        = "(default)"
   project     = google_project_service.firestore.project
-  location_id = "us-west1"
+  location_id = var.location
   type        = "FIRESTORE_NATIVE"
   depends_on  = [google_project_service.firestore]
 }
@@ -25,7 +25,7 @@ resource "null_resource" "firestore_data" {
 
 resource "google_container_cluster" "hello_world" {
   name     = "hello-cluster"
-  location = "us-west1-a"
+  location = var.location
   deletion_protection = false
 
   node_pool {
@@ -104,6 +104,3 @@ resource "google_project_service" "monitoring" {
 output "public_ip" {
   value = kubernetes_service.hello-cluster.status.0.load_balancer.0.ingress.0.ip
 }
-
-
- 

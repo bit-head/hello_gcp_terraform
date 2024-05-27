@@ -54,10 +54,27 @@ For this project's requirements, terraform is the obvious choice. Terraform is u
 -- Firestore data can be made available across multiple regions
 
 ## Setup and Configuration
-**NOTE:** This is an implementation for a home machine outside of Google Cloud's infrastructure. 
+**NOTE:** This is an implementation run from a home machine outside of Google Cloud's infrastructure. 
 
-- Sign in to Google and download your credentials
-- Ensure Google Cloud SDK installed (debian-based system)
+There is also a general assumption that you have establish an account in Google Cloud and have some knowledge of IAM.
+
+If you need help on how to set up Google Cloud here is how to [Get Started](https://cloud.google.com/docs/get-started).
+
+## Prerequisites Installation
+
+
+### Google SetUp:
+
+- Sign in to Google
+- Create a Service Account in IAM with these roles:
+-- Cloud Datastore Owner
+-- Editor
+-- Monitoring Admin
+-- Viewer
+- Download Service Account credentials to a local json file
+- Create a new project in Google Cloud
+- Ensure Google Cloud SDK installed
+-- Example below for debian-based system
 
 ```
 ## Download Googles GPG Key
@@ -68,19 +85,38 @@ curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor 
 echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 ```
 ```
-## Install Google Cloud SDK (required) and GKE Cloud Auth (if you want to play with kubectl)
+## Install Google Cloud SDK (required) and GKE Cloud Auth
 sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcloud-auth-plugin
 ```
+- Set project configuration
+`gcloud config set project [project id]`
+- Ensure your service account can manage key services:
+`gcloud projects add-iam-policy-binding [project id] --member='serviceAccount:<your service acount>' --role='roles/monitoring.admin'`
+`gcloud projects add-iam-policy-binding [project id] --member='serviceAccount:<your service account>' --role='roles/datastore.owner'`
+
 - Ensure Neccessary Google APIs are installed
-
-% 
-
-
-
+`gcloud services enable monitoring.googleapis.com firestore.googleapis.com container.googleapis.com'
 
 ### Installation Steps
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-repository/flask-firestore.git
-   cd flask-firestore
+   git clone https://github.com/bit-head/hello_gcp_terraform.git
+   cd hello_gcp_terraform
+
+2. Set up a python virtual environment
+
+  ```
+  mkdir venv
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
+
+3. Install the modules in requirements.txt 
+
+  `pip install -r requirements.txt`
+
+4. Ensure [Terraform](https://terraform.io) is installed and initialized 
+  
+  `terraform init`
+
