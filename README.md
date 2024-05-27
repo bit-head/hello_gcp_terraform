@@ -50,7 +50,8 @@ For this project's requirements, terraform is the obvious choice. Terraform is u
 - **Google Firestore**: A NoSQL database that stores and retrieves the message data. 
 -- For this project, serious thought was put into implementing a robust PostGreSQL database architecture using Patroni and pgbouncer, I decided for this excercise it makes sense to implement a NoSQL DB.
 -- After settling on a KVP-style DB, my plan was to use somethong obvious, like redis or etcd, but then during my research I stumbled across "Firestore".
--- Firestore is something new, specific to GCP that is simple to implement using a python script coupled with a service definition in terraform. 
+-- Firestore is serverless KVP database specific to GCP that is simple to implement using a python script coupled with a service definition in terraform.
+-- Firestore data can be made available across multiple regions
 
 ## Setup and Configuration
 **NOTE:** This is an implementation for a home machine outside of Google Cloud's infrastructure. 
@@ -59,13 +60,20 @@ For this project's requirements, terraform is the obvious choice. Terraform is u
 - Ensure Google Cloud SDK installed (debian-based system)
 
 ```
-% curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
-% echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-% sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcloud-auth-plugin
+## Download Googles GPG Key
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
 ```
+```
+## Ensure key and Google repo is included in your apt repo lists
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+```
+```
+## Install Google Cloud SDK (required) and GKE Cloud Auth (if you want to play with kubectl)
+sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcloud-auth-plugin
+```
+- Ensure Neccessary Google APIs are installed
 
-
-- Ensure Neccessary 
+% 
 
 
 
