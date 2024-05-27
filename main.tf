@@ -11,7 +11,7 @@ resource "google_project_service" "firestore" {
 resource "google_firestore_database" "default" {
   name        = "(default)"
   project     = google_project_service.firestore.project
-  location_id = var.location
+  location_id = "us-west1"
   type        = "FIRESTORE_NATIVE"
   depends_on  = [google_project_service.firestore]
 }
