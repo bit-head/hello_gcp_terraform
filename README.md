@@ -112,12 +112,12 @@ sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcl
 
   ```bash
   git clone https://github.com/bit-head/hello_gcp_terraform.git
-  cd hello_gcp_terraform```
+  cd hello_gcp_terraform
 
 2. **Build the Container**
 
   ```bash
-  docker build -t [container_registry_tag] .```
+  docker build -t [container_registry_tag] .
 
   **NOTE:** See [Store Docker Images in Artifact Registry](https://cloud.google.com/artifact-registry/docs/docker/store-docker-container-images)
 
@@ -126,17 +126,17 @@ sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcl
   ```bash
   mkdir venv
   python3 -m venv venv
-  source venv/bin/activate```
+  source venv/bin/activate
 
 4. Install the modules in requirements.txt
 
   ```bash
-  pip install -r requirements.txt```
+  pip install -r requirements.txt
 
 5. Ensure [Terraform](https://terraform.io) is installed and initialized 
   
   ```bash
-  terraform init```
+  terraform init
  
 6. Run terraform plan with required values
 
@@ -146,11 +146,12 @@ sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcl
 7. Run terraform with your plan
 
   ```bash
-  terraform apply plan```
+  terraform apply plan
 
 8. You should see the normal terraform output building Kubernetes, setting up pods, containers, and monitoring
 9. The final output will be 'public_ip: [IP4 Address]'
 10 Use curl or your favorite browser to access "http://[IP4 Address]"
 11. the result should be:
+
   ```json
-  [{"greeting":"Hello World!"}]```
+  [{"greeting":"Hello World!"}]
