@@ -67,14 +67,14 @@ If you need help on how to set up Google Cloud here is how to [Get Started](http
 
 - Sign in to Google
 - Create a Service Account in IAM with these roles:
- -- Cloud Datastore Owner
- -- Editor
- -- Monitoring Admin
- -- Viewer
+  Cloud Datastore Owner
+  Editor
+  Monitoring Admin
+  Viewer
 - Download Service Account credentials to a local json file
 - Create a new project in Google Cloud
 - Ensure Google Cloud SDK installed
- -- Example below for debian-based system
+  Example below for debian-based system
 
 ## Download The Google repo GPG Key
 
