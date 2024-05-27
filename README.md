@@ -114,7 +114,8 @@ sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcl
 
   ```bash
   git clone https://github.com/bit-head/hello_gcp_terraform.git
-  cd hello_gcp_terraform```
+  cd hello_gcp_terraform
+  ```
 
 2. **Build the Container**
 
