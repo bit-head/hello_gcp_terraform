@@ -75,29 +75,36 @@ If you need help on how to set up Google Cloud here is how to [Get Started](http
 - Ensure Google Cloud SDK installed
 -- Example below for debian-based system
 
-```bash
 ## Download Googles GPG Key
+
+```bash
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
 ```
 
-```bash
 ## Ensure key and Google repo is included in your apt repo lists
+
+```bash
 echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 ```
 
-```bash
 ## Install Google Cloud SDK (required) and GKE Cloud Auth
+
+```bash
 sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcloud-auth-plugin
 ```
 
 - Set project configuration
-`gcloud config set project [project id]`
+
+  `gcloud config set project [project id]`
+
 - Ensure your service account can manage key services:
-`gcloud projects add-iam-policy-binding [project id] --member='serviceAccount:<your service acount>' --role='roles/monitoring.admin'`
-`gcloud projects add-iam-policy-binding [project id] --member='serviceAccount:<your service account>' --role='roles/datastore.owner'`
+
+  `gcloud projects add-iam-policy-binding [project id] --member='serviceAccount:<your service acount>' --role='roles/monitoring.admin'`
+  `gcloud projects add-iam-policy-binding [project id] --member='serviceAccount:<your service account>' --role='roles/datastore.owner'`
 
 - Ensure Neccessary Google APIs are installed
-`gcloud services enable monitoring.googleapis.com firestore.googleapis.com container.googleapis.com'
+
+  `gcloud services enable monitoring.googleapis.com firestore.googleapis.com container.googleapis.com'
 
 ### Installation Steps
 
@@ -111,6 +118,7 @@ sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcl
 
   ```bash
   docker build -t [container_registry_tag] .```
+
   **NOTE:** See [Store Docker Images in Artifact Registry](https://cloud.google.com/artifact-registry/docs/docker/store-docker-container-images)
 
 3. **Set up a python virtual environment**
