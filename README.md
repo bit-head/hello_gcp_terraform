@@ -78,24 +78,22 @@ If you need help on how to set up Google Cloud here is how to [Get Started](http
 ## Download Googles GPG Key
 
 ```bash
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
-```
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg```
 
 ## Ensure key and Google repo is included in your apt repo lists
 
 ```bash
-echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-```
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list```
 
 ## Install Google Cloud SDK (required) and GKE Cloud Auth
 
 ```bash
-sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcloud-auth-plugin
-```
+sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcloud-auth-plugin```
 
 - Set project configuration
 
-  `gcloud config set project [project id]`
+  ```bash
+  gcloud config set project [project id]```
 
 - Ensure your service account can manage key services:
 
@@ -104,7 +102,7 @@ sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcl
 
 - Ensure Neccessary Google APIs are installed
 
-  `gcloud services enable monitoring.googleapis.com firestore.googleapis.com container.googleapis.com'
+  `gcloud services enable monitoring.googleapis.com firestore.googleapis.com container.googleapis.com`
 
 ### Installation Steps
 
@@ -112,12 +110,12 @@ sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcl
 
   ```bash
   git clone https://github.com/bit-head/hello_gcp_terraform.git
-  cd hello_gcp_terraform
+  cd hello_gcp_terraform```
 
 2. **Build the Container**
 
   ```bash
-  docker build -t [container_registry_tag] .
+  docker build -t [container_registry_tag] .```
 
   **NOTE:** See [Store Docker Images in Artifact Registry](https://cloud.google.com/artifact-registry/docs/docker/store-docker-container-images)
 
@@ -126,17 +124,17 @@ sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcl
   ```bash
   mkdir venv
   python3 -m venv venv
-  source venv/bin/activate
+  source venv/bin/activate```
 
 4. Install the modules in requirements.txt
 
   ```bash
-  pip install -r requirements.txt
+  pip install -r requirements.txt```
 
 5. Ensure [Terraform](https://terraform.io) is installed and initialized 
   
   ```bash
-  terraform init
+  terraform init```
  
 6. Run terraform plan with required values
 
@@ -146,7 +144,7 @@ sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcl
 7. Run terraform with your plan
 
   ```bash
-  terraform apply plan
+  terraform apply plan```
 
 8. You should see the normal terraform output building Kubernetes, setting up pods, containers, and monitoring
 9. The final output will be 'public_ip: [IP4 Address]'
@@ -154,4 +152,4 @@ sudo apt update && sudo apt -y install google-cloud-sdk google-cloud-sdk-gke-gcl
 11. the result should be:
 
   ```json
-  [{"greeting":"Hello World!"}]
+  [{"greeting":"Hello World!"}]```
